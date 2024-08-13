@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Example</title>
+  <!-- Plyr CSS -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+  <style>
+    /* This is purely for the demo */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .plyr {
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- YouTube video embedded using Plyr with iframe -->
+    <div class="plyr__video-embed js-playe" id="player" data-plyr-provider="youtube" data-plyr-embed-id="-TbrrvZEzic">
+    </div>
+
+    <!-- <div class="actions">
+      <button type="button" class="btn js-rewind">Rewind</button>
+      <button type="button" class="btn js-forward">Forward</button>
+    </div> -->
+  </div>
+
+  <!-- Plyr JS -->
+  <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Plyr for YouTube with custom options
+      const controls = [
+        'play-large', // The large play button in the center
+        // 'restart', // Restart playback
+        'rewind', // Rewind by the seek time (default 10 seconds)
+        'play', // Play/pause playback
+        'fast-forward', // Fast forward by the seek time (default 10 seconds)
+        'progress', // The progress bar and scrubber for playback and buffering
+        'current-time', // The current time of playback
+        'duration', // The full duration of the media
+        'mute', // Toggle mute
+        'volume', // Volume control
+        //'captions', // Toggle captions
+        'settings', // Settings menu
+        //'pip', // Picture-in-picture (currently Safari only)
+        //'airplay', // Airplay (currently Safari only)
+        // 'download', // Show a download button with a link to either the current source or a custom URL you specify in your options
+        'fullscreen' // Toggle fullscreen
+      ];
+      const player = new Plyr('#player', {
+        controls,
+        youtube: {
+          rel: 0 // Prevent showing related videos
+        }
+      });
+
+      // Expose the player to the window object
+      window.player = player;
+
+      // Bind event listeners
+      function on(selector, type, callback) {
+        document.querySelector(selector).addEventListener(type, callback, false);
+      }
+
+      // Play
+      on('.js-play', 'click', () => {
+        player.play();
+      });
+
+      // Pause
+      on('.js-pause', 'click', () => {
+        player.pause();
+      });
+
+      // Stop
+      on('.js-stop', 'click', () => {
+        player.stop();
+      });
+
+      // Rewind
+      on('.js-rewind', 'click', () => {
+        player.rewind(10); // Rewind 10 seconds
+      });
+
+      // Forward
+      on('.js-forward', 'click', () => {
+        player.forward(10); // Forward 10 seconds
+      });
+    });
+  </script>
+</body>
+
+</html>
